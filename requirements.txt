@@ -1,0 +1,1 @@
+# Python 3.10+ on Windows. All runtime dependencies are in the standard library.
