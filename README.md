@@ -6,15 +6,17 @@ A Python command-line interface for the POWER-Z ET240 USB Power Delivery analyze
 
 The ET240 is controlled directly through Windows HID and WinUSB. **No Sniffer.exe, SnifferCmd.exe, vendor DLL, or third-party Python package is needed at runtime.**
 
-This initial version supports passive PD capture, voltage/current recording, native USB replay, Analyzer Utility export, and offline PPS/AVS transition analysis. Hardware access was verified on an SN3005; live PD negotiations, EPR operation, and measurement accuracy under load still need validation. See [Validation](VALIDATION.md) for the evidence and remaining limits.
+This initial version supports passive PD capture, voltage/current recording, native USB replay, Analyzer Utility export, and offline PPS/AVS transition analysis. Hardware access was verified on an ET240 with hardware edition 5 (SN3005); live PD negotiations, EPR operation, and measurement accuracy under load still need validation. See [Validation](VALIDATION.md) for the evidence and remaining limits.
 
 ## Requirements
 
 - Windows 10 or 11 and Python 3.10 or later.
-- An ET240 with its HID and WinUSB interfaces available. The verified device was SN3005, firmware `A1 05 23 11 30 E2`. Other editions are currently rejected.
+- An ET240 with its HID and WinUSB interfaces available, using hardware edition 5 (the vendor's SN3005 hardware family).
 - Close Sniffer and other capture applications before connecting from this CLI.
 
 The CLI uses the existing Windows HID/WinUSB drivers; no driver replacement is required. Keep all Python files from this repository together. `requirements.txt` documents the Python requirement; there are no packages to install with pip.
+
+**SN3005 is a hardware edition name, not an individual device serial number. There is no allowlist of USB serial numbers or firmware versions.** Firmware `A1 05 23 11 30 E2` is the version used for validation. The edition check selects the supported telemetry format; other formats, including the older SN3003 format, are not yet implemented. `--device` only selects a device when needed.
 
 ## Quick start
 
@@ -122,7 +124,7 @@ Derived `.records.bin` timestamps are rounded to integer microseconds and stored
 
 ## Validation and limitations
 
-- Verified device information, capture start/stop, and reopening on an attached SN3005.
+- Verified device information, capture start/stop, and reopening on an ET240 with hardware edition 5 (SN3005).
 - A three-second hardware capture saved 499 waveform samples; native replay reproduced those samples.
 - All 228 PD packets across five vendor example traces matched payload bytes, CRC bytes/results, and SOP.
 - Automated tests cover transfer boundaries, counter wrap, CRC failures, disconnect cleanup, overwrite protection, separate output destinations, and synthetic PPS transition analysis.

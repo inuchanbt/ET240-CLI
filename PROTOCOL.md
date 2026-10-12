@@ -1,7 +1,8 @@
 # ET240 direct transport notes
 
 Evidence: local Sniffer 1.08.26.0809, DeviceAp / SnrEng / PdUtil methods, five supplied traces,
-and an attached SN3005 (firmware A1 05 23 11 30 E2). These notes describe the implemented subset.
+and an attached ET240 with hardware edition 5 (SN3005, firmware A1 05 23 11 30 E2).
+These notes describe the implemented subset.
 
 ## USB interfaces
 
@@ -15,6 +16,12 @@ and an attached SN3005 (firmware A1 05 23 11 30 E2). These notes describe the im
 HID uses report ID 0 and device-reported report lengths. Byte 1 is command 02 for GET_INFO
 or 10 for SET_CONFIG. GET_INFO fields: bytes 1..12 device ID, byte 17 edition (5 = SN3005),
 bytes 19..24 firmware. Remaining response bytes are not interpreted or exported.
+
+SN3005 is the vendor's hardware edition name, separate from the USB serial number.
+There is no individual serial-number or firmware-version allowlist. Capture currently requires
+edition 5 because its telemetry format is implemented; the older SN3003 format differs.
+The optional `--device` argument selects a USB serial or interface path, rather than restricting
+which individual ET240 units are supported.
 
 SET_CONFIG has 48 body bytes starting at report offset 2. Defaults:
 body[0]=03 (CC1+CC2 edges), body[1]=00 (AUX disabled), body[2]=00 (BMC priority),

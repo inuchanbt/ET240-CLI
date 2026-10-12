@@ -218,7 +218,8 @@ def cmd_capture(args):
         with ET240(device=args.device,timeout_ms=250) as d:
             metadata['device']=d.get_info()
             if metadata['device']['edition']!=5:
-                raise ET240Error('This decoder supports SN3005/ET240 edition 5 only.')
+                raise ET240Error(f"Unsupported ET240 telemetry format: hardware edition {metadata['device']['edition']}; "
+                                 'this decoder supports hardware edition 5.')
             output=SessionOutput(args)
             d.start_capture(sample_rate=args.sample_rate)
             metadata['endpoints']=d.endpoints
@@ -277,7 +278,10 @@ def cmd_live_status(args):
             writer=csv.writer(stack.enter_context(path.open('w',encoding='utf-8',newline='')))
             writer.writerow(['index','timestamp_us','vbus_V','ibus_A','ibus_median_A','cc1_V','cc2_V','power_W'])
         d=stack.enter_context(ET240(device=args.device,timeout_ms=250))
-        if d.get_info()['edition']!=5: raise ET240Error('Only SN3005/ET240 edition 5 is supported')
+        info=d.get_info()
+        if info['edition']!=5:
+            raise ET240Error(f"Unsupported ET240 telemetry format: hardware edition {info['edition']}; "
+                             'this decoder supports hardware edition 5.')
         d.start_capture(sample_rate=args.sample_rate,bmc=False)
         next_output=0
         try:

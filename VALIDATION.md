@@ -8,7 +8,7 @@ Validated 2026-10-12 (Asia/Tokyo).
 - Synthetic PPS source capabilities, request, ACCEPT, PS_RDY and voltage ramp produced a 10V transition analysis.
 - CRC failures, strict framing, epoch wrap, hard reset, signed-current magnitude, output collisions,
   input preservation, independent scope/PD destinations and disconnect cleanup passed.
-- Attached ET240: SN3005, firmware A1 05 23 11 30 E2, Windows HID + WinUSB.
+- Attached ET240: hardware edition 5 (SN3005), firmware A1 05 23 11 30 E2, Windows HID + WinUSB.
 - GET_INFO succeeded; confirmed bulk IN 0x83, bulk OUT 0x04, interrupt IN 0x85.
 - 3-second capture (`captures/hardware_smoke.*`): 502 USB transfers, 499 telemetry samples, zero framing/decode errors.
 - Native USB replay reproduced 499 telemetry samples.
